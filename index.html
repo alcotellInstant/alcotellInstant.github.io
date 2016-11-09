@@ -34,9 +34,14 @@
   // Button.  See the onlogin handler attached to it in the sample
   // code below.
   function checkLoginState() {
-    FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
-    });
+    statusChangeCallbackFB.login(function(response){
+FB.api('/me/accounts', function(response){
+   var p_accessToken = response.data[0].access_token;
+   var p_name = response.data[0].name;
+   alert('The pagename is:'
+           + p_name + 'Page access token is'
+           + p_accessToken);});}
+   ,{scope:"public_profile,email,pages_manage_instant_articles,pages_show_list,manage_pages"});
   }
 
   window.fbAsyncInit = function() {
@@ -79,13 +84,11 @@
   // successful.  See statusChangeCallback() for when this call is made.
   function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me/accounts', function(response){
-   var p_accessToken = response.data[0].access_token;
-   var p_name = response.data[0].name;
-   alert('The pagename is:'
-           + p_name + 'Page access token is'
-           + p_accessToken);});}
-   ,{scope:"manage_pages"}); 
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+    });
   }
 </script>
 
