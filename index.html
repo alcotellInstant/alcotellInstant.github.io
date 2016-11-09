@@ -34,7 +34,7 @@
   // Button.  See the onlogin handler attached to it in the sample
   // code below.
   function checkLoginState() {
-    statusChangeCallbackFB.login(function(response){
+    FB.login(function(response){
 FB.api('/me/accounts', function(response){
    var p_accessToken = response.data[0].access_token;
    var p_name = response.data[0].name;
