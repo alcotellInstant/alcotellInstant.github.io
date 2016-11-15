@@ -36,6 +36,7 @@
   function checkLoginState() {
     FB.login(function(response){
 FB.api('/me/accounts', function(response){
+  console.log(response);
    var p_accessToken = response.data[0].access_token;
    var p_name = response.data[0].name;
    alert('The pagename is:'
