@@ -22,17 +22,37 @@ var successHandler = function(response) {
     instantArticleHTML = instantArticleHTML + '<h1>' + apiData.title + '</h1> <h2>' + apiData.title_desc + '</h2> <h3 class="op-kicker"> HK Connect Instant Article </h3> <address> HealthKart Team </address>  <time class="op-published" dateTime="2016-2-04T09:00">' + apiData.date + '</time> <time class="op-modified" dateTime="2016-2-04T09:00">' + apiData.date + '</time> </header> ';
     //Main content section for loop
     for(var i=0; i< apiData.sub_section.length; i++) {
-        if(apiData.sub_section[i].heading) {
-            instantArticleHTML = instantArticleHTML + '<h1>' + apiData.sub_section[i].heading + '</h1>';
-        }
-        if(apiData.sub_section[i].images.length>=1) {
-            for(var j=0; j< apiData.sub_section[i].images.length; j++) {
-                instantArticleHTML = instantArticleHTML + ' <figure data-feedback="fb:likes, fb:comments"> <img src="' +  apiData.sub_section[i].images[j].image_web +'" />';
-               instantArticleHTML = instantArticleHTML + '<figcaption><h1>' + apiData.sub_section[i].images[j].image_title + '</h1> <h2>'+ apiData.sub_section[i].images[j].image_text +'</h2><cite>PHOTO BY Healthkart</cite> </figcaption> </figure>';
+        if(i == apiData.sub_section.length -1) {
+            if(apiData.sub_section[i].heading) {
+                instantArticleHTML = instantArticleHTML + '<h1>' + apiData.sub_section[i].heading + '</h1>';
+            }
+            if(apiData.sub_section[i].images.length>=1) {
+                for(var j=0; j< apiData.sub_section[i].images.length; j++) {
+                    instantArticleHTML = instantArticleHTML + ' <figure data-mode="fullscreen"> <img src="' +  apiData.sub_section[i].images[j].image_web +'" />';
+                   instantArticleHTML = instantArticleHTML + '<figcaption class="op-vertical-bottom op-large"> <h1 class="op-vertical-bottom op-extra-large">' + apiData.sub_section[i].images[j].image_title + '</h1> Team Healthkart </figcaption> </figure>';
+                }
+            }
+            if(apiData.sub_section[i].sub_text) {
+                instantArticleHTML = instantArticleHTML + apiData.sub_section[i].sub_text;
             }
         }
-        if(apiData.sub_section[i].sub_text) {
-            instantArticleHTML = instantArticleHTML + apiData.sub_section[i].sub_text;
+        else {
+            if(apiData.sub_section[i].heading) {
+                instantArticleHTML = instantArticleHTML + '<h1>' + apiData.sub_section[i].heading + '</h1>';
+            }
+            if(apiData.sub_section[i].images.length>=1) {
+                for(var j=0; j< apiData.sub_section[i].images.length; j++) {
+                    instantArticleHTML = instantArticleHTML + ' <figure data-feedback="fb:likes, fb:comments"> <img src="' +  apiData.sub_section[i].images[j].image_web +'" />';
+                   instantArticleHTML = instantArticleHTML + '<figcaption><h1>' + apiData.sub_section[i].images[j].image_title + '</h1> <h2>'+ apiData.sub_section[i].images[j].image_text +'</h2><cite>PHOTO BY Healthkart</cite> </figcaption> </figure>';
+                }
+            }
+            if(apiData.sub_section[i].sub_text) {
+                instantArticleHTML = instantArticleHTML + apiData.sub_section[i].sub_text;
+            }
+        }
+        if(apiData.sub_section[i].video) {
+            var videoURL = apiData.sub_section[i].video.split("src=\"")[1].split("\"")[0];
+            instantArticleHTML = instantArticleHTML + '<figure class="op-interactive">' + apiData.sub_section[i].video + '</figure>';
         }
     }
 
@@ -40,7 +60,7 @@ var successHandler = function(response) {
     console.log(instantArticleHTML);
 }
 $.ajax({
-  url: "http://192.168.70.94:81/connect/api/article/get.json?args[0]=5312",
+  url: "http://192.168.70.94:81/connect/api/article/get.json?args[0]=5268",
   success: successHandler
 });
 </script>
